@@ -5,19 +5,6 @@
 
 struct sect sect_hd = {""};
 
-static int to_integer(const char *str, int n)
-{
-	int i = *str=='-';
-	if (str[i]>'0' && str[i]<='9') {
-		i++;
-		for (; i<n; i++)
-			if (!isdigit(str[i]))
-				return 0;
-		return atoi(str);
-	}
-	return 0;
-}
-
 int strtoval(char *str, union val *val)
 {
 	int n;
@@ -34,7 +21,7 @@ int strtoval(char *str, union val *val)
 		val->p = str;
 		return 2;
 	}
-	if ((val->integ = to_integer(str, n)) != 0) {
+	if ((val->integ = strtol(str, NULL, 0)) != 0) {
 		return 0;
 	}
 	strncpy(val->str, str, 4);
@@ -136,7 +123,7 @@ int getopt_int(const char *sect_name, const char *key)
 	if (o) {
 		const char *s = opt_longstr(o);
 		if (s) {
-			int d = to_integer(s, strlen(s));
+			int d = strtol(s, NULL, 0);
 			if (d != 0)
 				return d;
 		}
@@ -223,7 +210,7 @@ void freeoptions(const char *sect_name)
 			freeoptions(sect_hd.next->name);
 		s = &sect_hd;
 	}
-	while (o = s->opts) {
+	while ((o = s->opts)) {
 		s->opts = o->next;
 		free(o);
 	}

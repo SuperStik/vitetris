@@ -116,9 +116,9 @@ void upd_wonlost_stats(const char *me, const char *opponent, int won)
 		else
 			loss = 1;
 		p = strchr(s, '-');
-		if (p && isdigit(p[1])) {
-			won  += atoi(s);
-			loss += atoi(p+1);
+		if (p != NULL && isdigit(p[1])) {
+			won  += strtol(s, NULL, 0);
+			loss += strtol(p+1, NULL, 0);
 			if (won >= 1000)
 				won = 999;
 			if (loss >= 1000)

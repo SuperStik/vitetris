@@ -83,7 +83,7 @@ static int argtonum(const char *arg)
 		while (isspace(*arg))
 			arg++;
 		if (isdigit(*arg))
-			return atoi(arg);
+			return strtol(arg, NULL, 0);
 	}
 	return -1;
 }

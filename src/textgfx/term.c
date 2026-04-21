@@ -50,10 +50,10 @@ void gettermsize()
 #endif
 	if (gettermsize_unix())
 		return;
-	if (s = getenv("COLUMNS"))
-		w = atoi(s);
-	if (s = getenv("LINES"))
-		h = atoi(s);
+	if ((s = getenv("COLUMNS")) != NULL)
+		w = strtol(s, NULL, 0);
+	if ((s = getenv("LINES")) != NULL)
+		h = strtol(s, NULL, 0);
 	settermwidth(w);
 	settermheight(h);
 }

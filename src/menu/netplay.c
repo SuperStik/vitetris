@@ -180,7 +180,7 @@ static int try_connect(int x, int y)
 		while (*s == ' ');
 		n = -1;
 		if (isdigit(*s))
-			n = atoi(s);
+			n = strtol(s, NULL, 0);
 		if (n > 0xFFFF || n <= 0) {
 			printstr("Invalid port number");
 			return 0;
