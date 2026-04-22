@@ -134,18 +134,20 @@ static void printline(char *line)
 
 static void read_print_message(FILE *fp, int x, int y)
 {
-	char line[80];
+	char *line = NULL;
+	size_t linecap = 0;
 	if (fp) {
 		fseek(fp, 0, SEEK_SET);
-		if (fgets(line, 80, fp)) {
+		if (getline(&line, &linecap, fp) > 0) {
 			setcurs(x, y);
 			printline(line);
 			cleartoeol();
 		}
-		if (fgets(line, 80, fp)) {
+		if (getline(&line, &linecap, fp) > 0) {
 			newln(x);
 			printline(line);
 		}
+		free(line);
 		fclose(fp);
 	}
 }

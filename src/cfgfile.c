@@ -231,7 +231,8 @@ static int is_inputconf(const char *key)
 void readoptions()
 {
 	FILE *fp;
-	char line[80];
+	char *line = NULL;
+	size_t linecap = 0;
 	char key[12];
 	union val val;
 	int tp;
@@ -243,7 +244,8 @@ void readoptions()
 	fp = fopen(cfgfilename, "r");
 	if (!fp)
 		return;
-	while (fgets(line, 80, fp)) {
+
+	while (getline(&line, &linecap, fp) > 0) {
 		if (!readopt(line, key, &val, &tp))
 			continue;
 		if (line[0] == '[') {
@@ -270,6 +272,7 @@ void readoptions()
 		}
 addopt:		addopt(key, val, tp, sect_hd.next);
 	}
+	free(line);
 	fclose(fp);
 
 	lastscore = getopt_int("", "lastscore");
