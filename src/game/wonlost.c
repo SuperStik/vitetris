@@ -82,7 +82,7 @@ static void setopt_wonlost(const char *key,
 {
 	union val val;
 	char buf[44];
-	sprintf(buf, "%s %s %s", me, opp, stats);
+	snprintf(buf, sizeof(buf), "%s %s %s", me, opp, stats);
 	val.p = buf;
 	setoption("wonlost", key, val, 2);
 }

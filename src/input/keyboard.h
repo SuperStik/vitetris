@@ -25,4 +25,4 @@ int kb_getchrfor(int keypress);
 void kb_rmmapping(int keypress);
 
 /* returns key name or null */
-const char *kb_keyname(unsigned char *key, int n);
+const char *kb_keyname(unsigned char *key, size_t buf_size, int n);

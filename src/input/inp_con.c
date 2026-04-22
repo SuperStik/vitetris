@@ -44,11 +44,11 @@ void kb_flushinp()
 		getch();
 }
 
-const char *kb_keyname(unsigned char *key, int n)
+const char *kb_keyname(unsigned char *key, size_t buf_size, int n)
 {
 	if (n < 2)
 		return NULL;
-	sprintf(key, "0+%X", key[1]);
+	snprintf(key, buf_size, "0+%X", key[1]);
 	return key;
 }
 

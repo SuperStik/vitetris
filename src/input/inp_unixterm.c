@@ -92,9 +92,9 @@ void kb_flushinp()
 		;
 }
 
-const char *kb_keyname(unsigned char *key, int n)
+const char *kb_keyname(unsigned char *key, size_t buf_size, int n)
 {
-	if (n < 2)
+	if (n < 2 || n > (buf_size + 3))
 		return NULL;
 	memmove(key+3, key+1, n);
 	memcpy(key, "ESC", 3);

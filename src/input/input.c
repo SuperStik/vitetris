@@ -250,7 +250,7 @@ static const char *getkeyfor_str_keybd(int keypr, int *c)
 	int n = kb_getkeyfor(keypr, bytes, 1);
 	if (!n)
 		return "";
-	name = kb_keyname(bytes, n);
+	name = kb_keyname(bytes, sizeof(bytes), n);
 	if (name)
 		return name;
 	bytes[n] = '\0';

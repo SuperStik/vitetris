@@ -88,7 +88,7 @@ void kb_flushinp()
 	flushinp();
 }
 
-const char *kb_keyname(unsigned char *key, int n)
+const char *kb_keyname(unsigned char *key, size_t buf_size, int n)
 {
 	unsigned c;
 	if (n < 2)
@@ -105,7 +105,7 @@ const char *kb_keyname(unsigned char *key, int n)
 	case KEY_ALT_R:     return "ALTGR";
 	}
 #endif
-	sprintf(key, "%X", c);
+	snprintf(key, buf_size, "%X", c);
 	return key;
 }
 

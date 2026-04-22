@@ -79,7 +79,7 @@ void initgame()
 #ifdef SOCKET
 		else if (!strcmp(opt_key(o), "name")) {
 			if (opt_isint(o))
-				sprintf(my_name, "%d", v);
+				snprintf(my_name, sizeof(my_name), "%d", v);
 			else
 				strncpy(my_name, opt_longstr(o), 16);
 		}
