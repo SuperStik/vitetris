@@ -1,3 +1,5 @@
+#include <stddef.h>
+
 /* socket flags */
 #define IS_SERVER 1
 #define CONNECTED 2
@@ -94,6 +96,6 @@ int sock_getkeypress(int flags);
 
 void conn_broken(int sig);
 void accept_conn();
-void writebytes(const char *buf, int n);
-int readbytes(char *buf, int n);
+void writebytes(const char *buf, size_t n);
+int readbytes(char *buf, size_t n);
 int waitinput_sock(unsigned msec);

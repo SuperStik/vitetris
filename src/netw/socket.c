@@ -138,17 +138,15 @@ void accept_conn()
 	sock_flags |= CONNECTED;
 }
 
-void writebytes(const char *buf, int n)
+void writebytes(const char *buf, size_t n)
 {
-	int i = send(mysock, buf, n, 0);
-	if (i == n)
-		return;
-	if (i == -1) {
-		if (!TEST_EINTR)
+	size_t i = 0;
+	do {
+		ssize_t bytes = write(mysock, buf+i, n-i);
+		if (bytes == -1 && !TEST_EINTR)
 			return;
-		i = 0;
-	}
-	writebytes(buf+i, n-i);
+		i += bytes;
+	} while (i < n);
 }
 
 int waitinput_sock(unsigned msec)
@@ -181,23 +179,25 @@ static int waitinput_1sec()
 	return 0;
 }
 
-int readbytes(char *buf, int n)
+int readbytes(char *buf, size_t n)
 {
-	int i;
+	size_t i = 0;
 	if (sock_flags & CONN_BROKEN)
 		return 0;
 	if (!waitinput_1sec())
 		goto broken;
-	i = recv(mysock, buf, n, 0);
-	if (i == n)
-		return 1;
-	if (i == -1 && TEST_EINTR)
-		i = 0;
-	else if (i <= 0) {
-broken:		conn_broken(0);
-		return 0;
-	}
-	return readbytes(buf+i, n-i);
+	do {
+		ssize_t bytes = read(mysock, buf, n);
+		if (bytes == -1 && TEST_EINTR)
+			continue;
+		else if (i <= 0) {
+broken:
+			conn_broken(0);
+			return 0;
+		}
+		i += bytes;
+	} while (i < n);
+	return 1;
 }
 
 void rmsocket()
