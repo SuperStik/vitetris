@@ -1,5 +1,5 @@
 #include <conio.h>
-#include <stdio.h>	/* sprintf */
+#include <stdio.h>	/* snprintf */
 #include "termin.h"
 #include "keyboard.h"
 #include "input.h"

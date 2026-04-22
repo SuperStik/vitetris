@@ -1,6 +1,6 @@
 #include <string.h>
 #include <ctype.h>
-#include <stdio.h>	/* sprintf */
+#include <stdio.h>	/* snprintf */
 #include "../game/tetris.h"
 #include "draw.h"
 #include "internal.h"
@@ -240,7 +240,7 @@ static void print_top_scores()
 		putch('.');
 		if (hs->score < 1000000)
 			putch(' ');
-		sprintf(s, "%06ld", (long) hs->score);
+		snprintf(s, sizeof(s), "%06ld", (long) hs->score);
 		printstr(s);
 		hs++;
 		i++;

@@ -223,6 +223,6 @@ const char *js_btnname(int btn)
 		name[0] = btn+'A';
 		name[1] = '\0';
 	} else
-		sprintf(name, "%d", btn);
+		snprintf(name, sizeof(name), "%d", btn);
 	return name;
 }

@@ -1,5 +1,5 @@
 #include <string.h>
-#include <stdio.h>	/* sprintf */
+#include <stdio.h>	/* snprintf */
 #include <stdlib.h>	/* exit */
 #include "input.h"
 #include "keyboard.h"
@@ -265,7 +265,7 @@ static const char *getkeyfor_str_keybd(int keypr, int *c)
 				*c = n;
 				return NULL;
 			}
-			sprintf((char *) bytes, "%d", n);
+			snprintf((char *)bytes, sizeof(bytes), "%d", n);
 		}
 	}
 	return (const char *) bytes;

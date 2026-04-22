@@ -491,7 +491,7 @@ static void save_host(const char *hostname, int port)
 	char s[74];
 	union val v;
 	if (strlen(hostname) < 68) {
-		sprintf(s, "%s:%d", hostname, port);
+		snprintf(s, sizeof(s), "%s:%d", hostname, port);
 		v.p = s;
 		setoption("", "host", v, 2);
 	}

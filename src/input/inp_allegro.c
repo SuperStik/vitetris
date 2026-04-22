@@ -1,5 +1,5 @@
 #include <string.h>
-#include <stdio.h>	/* sprintf */
+#include <stdio.h>	/* snprintf */
 #include "../config.h"
 #include <allegro.h>
 #include "keyboard.h"
@@ -241,7 +241,7 @@ void kb_flushinp()
 	temp_autorep_key = 0;
 }
 
-const char *kb_keyname(unsigned char *key, int n)
+const char *kb_keyname(unsigned char *key, size_t buf_size, int n)
 {
 	static char numstr[6] = "NUM  ";
 	int scan;
@@ -264,7 +264,7 @@ const char *kb_keyname(unsigned char *key, int n)
 	name = scancode_to_name(key[1]);
 	if (strlen(name) <= 5)
 		return name;
-	sprintf(key, "0+%X", key[1]);
+	snprintf(key, buf_size, "0+%X", key[1]);
 	return key;
 }
 
