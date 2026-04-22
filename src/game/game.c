@@ -43,7 +43,6 @@ void initgame()
 	struct option *o = getoptions("");
 	int v;
 	int i;
-	srand(time(NULL));
 	game->mode = getopt_int("", "mode");
 #ifndef TWOPLAYER
 	game->mode &= ~(MODE_2PLAYER | MODE_NETWORK);

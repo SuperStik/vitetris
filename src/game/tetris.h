@@ -105,7 +105,7 @@ struct game_2p {
 
 extern char clearedlines[4];
 
-int randnum(int n);
+unsigned randnum(unsigned n);
 void gettetrom(struct tetr *t, int i);
 
 int hitbtm(struct tetr *piece, struct player *p);

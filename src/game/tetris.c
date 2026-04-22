@@ -13,9 +13,9 @@ char clearedlines[4];
 /* process single-player input */
 static int processinput(int tm, int flags);
 
-int randnum(int n)
+unsigned randnum(unsigned n)
 {
-	return (int) (n*(rand()/(RAND_MAX+1.0)));
+	return (unsigned)arc4random_uniform(n);
 }
 
 void gettetrom(struct tetr *t, int i)
