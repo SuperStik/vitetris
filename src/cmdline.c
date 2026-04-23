@@ -203,7 +203,8 @@ static void printopts(int tabw, const char *a, const char *s)
 			buf[p-s] = '\0';
 			s = p+1;
 		} else {
-			strcpy(buf, s);
+			strncpy(buf, s, sizeof(buf) - 1);
+			buf[sizeof(buf) - 1] = '\0';
 			s = "";
 		}
 		if (buf[0])
@@ -474,11 +475,12 @@ static char *getopt_host()
 	static char host[84];
 	const char *s = getopt_str("", "host");
 	char *p;
-	if (s) {
-		strcpy(host, s);
+	if (s != NULL) {
+		strncpy(host, s, sizeof(host) - 1);
+		host[sizeof(host) - 1] = '\0';
 		p = strchr(host, ':');
-		if (!p)
-			strcat(host, ":34034");
+		if (p == NULL)
+			strncat(host, ":34034", sizeof(host));
 		return host;
 	}
 #endif
@@ -528,7 +530,7 @@ static int is_tty_maybe(const char *tty)
 		return 1;
 	if (strlen(tty) > 10)
 		return 0;
-	strcat(fname, tty);
+	strncat(fname, tty, sizeof(fname));
 	return stat(fname, &st) == 0;
 #endif
 }

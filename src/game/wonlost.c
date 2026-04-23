@@ -126,7 +126,7 @@ void upd_wonlost_stats(const char *me, const char *opponent, int won)
 		}
 		snprintf(stats, sizeof(stats), "%d-%d", won, loss);
 		if (strlen(stats) <= strlen(s))
-			strcpy(s, stats);
+			strncpy(s, stats, sizeof(stats));
 		else
 			setopt_wonlost(key, me, opponent, stats);
 	}

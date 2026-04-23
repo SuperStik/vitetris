@@ -34,7 +34,7 @@ static int get_this_tty()
 		if (s[i] == '/')
 			i++;
 	}
-	strcpy(this_tty, s+i);
+	strncpy(this_tty, s+i, sizeof(this_tty));
 	return 1;
 }
 
@@ -200,9 +200,9 @@ static char *inviteplayer(const char *tty)
 static char *errmsg_connect_local()
 {
 	char *msg;
-	char *s = malloc(strlen(SUN_PATH(sock_addr))+9);
-	strcpy(s, "connect ");
-	strcat(s, SUN_PATH(sock_addr));
+	size_t slen = strlen(SUN_PATH(sock_addr)) + 9;
+	char *s = malloc(slen);
+	snprintf(s, slen, "connect %s", SUN_PATH(sock_addr));
 	msg = errmsg(s);
 	free(s);
 	return msg;

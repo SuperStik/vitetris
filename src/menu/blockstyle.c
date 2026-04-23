@@ -51,7 +51,8 @@ static void setblockstyle(int i, int c)
 		textgfx_flags |= BLACK_BRACKETS;
 		block_chars[0] = '[';
 		block_chars[1] = ']';
-		strcpy(v.str, "[]b");
+		strncpy(v.str, "[]b", sizeof(v.str) - 1);
+		v.str[sizeof(v.str) - 1] = '\0';
 		tp = 1;
 		break;
 	case 4:

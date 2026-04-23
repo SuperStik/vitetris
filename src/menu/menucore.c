@@ -46,8 +46,10 @@ void printmenuitem_options(const char *str, int sel)
 		if (p = strchr(str, ' ')) {
 			memcpy(buf, str, p-str);
 			buf[p-str] = '\0';
-		} else
-			strcpy(buf, str);
+		} else {
+			strncpy(buf, str, sizeof(buf) - 1);
+			buf[sizeof(buf) - 1] = '\0';
+		}
 		if (!sel) {
 			setattr_standout();
 			ret = printstr(buf);

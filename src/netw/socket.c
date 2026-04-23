@@ -60,17 +60,14 @@ const char *sock_strerror()
 
 char *sock_errmsg(const char *descr)
 {
-	int n = strlen(descr);
+	size_t n = strlen(descr);
 	const char *s = sock_strerror();
-	char *msg     = malloc(n+strlen(s)+10);
-	strcpy(msg, "ERROR! ");
-	strcat(msg, descr);
-	if (*s) {
-		n += 7;
-		msg[n] = ':';
-		msg[n+1] = ' ';
-		strcpy(msg+n+2, s);
-	}
+	size_t msglen = n + strlen(s) + 10;
+	char *msg     = malloc(msglen);
+	if (*s)
+		snprintf(msg, msglen, "ERROR! %s: %s", descr, s);
+	else
+		snprintf(msg, msglen, "ERROR! %s", descr);
 	return msg;
 }
 

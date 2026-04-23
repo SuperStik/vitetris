@@ -20,7 +20,8 @@ static void setpl2js()
 	union val v;
 	if (inputdevs_fd[1] < 0)
 		s = "js1";
-	strcpy(v.str, s);
+	strncpy(v.str, s, sizeof(v.str) - 1);
+	v.str[sizeof(v.str) - 1] = '\0';
 	setoption("player2", "input", v, 1);
 	inputdevs_player[s[2]-'0'+1] = 2;
 }

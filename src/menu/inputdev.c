@@ -12,7 +12,8 @@ static char devices_str[14];
 
 static void upd_devstr()
 {
-	strcpy(devices_str, "keybd js0 js1");
+	strncpy(devices_str, "keybd js0 js1", sizeof(devices_str) - 1);
+	devices_str[sizeof(devices_str) - 1] = '\0';
 	if (num_joyst == 1)
 		inputdevs_fd[2] = -1;
 	if (num_joyst && (inputdevs_fd[1] > -1 || inputdevs_fd[2] > -1)) {

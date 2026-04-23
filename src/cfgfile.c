@@ -33,7 +33,7 @@ void setcfgfilename(const char *argv0)
 	const char *s = getenv("HOME");
 	if (!s && (pwd = getpwuid(getuid())))
 		s = pwd->pw_dir;
-	if (s && strlen(s)+strlen(CONFIG_FILENAME) < 79) {
+	if (s && strlen(s)+strlen(CONFIG_FILENAME) < sizeof(cfgfilename) - 1) {
 		strcpy(cfgfilename, s); 
 		strcat(cfgfilename, "/"CONFIG_FILENAME);
 	}

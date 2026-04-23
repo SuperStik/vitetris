@@ -49,9 +49,10 @@ static struct sect *getsect(const char *name, struct sect **prev)
 struct sect *addsect(const char *name)
 {
 	struct sect *s = getsect(name, NULL);
-	if (!s) {
+	if (s == NULL) {
 		s = malloc(sizeof(struct sect));
-		strcpy(s->name, name);
+		strncpy(s->name, name, sizeof(s->name) - 1);
+		s->name[sizeof(s->name) - 1] = '\0';
 		s->opts = NULL;
 		s->next = sect_hd.next;
 		sect_hd.next = s;
