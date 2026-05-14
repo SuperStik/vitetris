@@ -1,6 +1,7 @@
 #include "config.h"
 #if UNIX
 #include <sys/time.h>
+#include <time.h>
 #include <unistd.h>
 #elif WIN32
 #include <windows.h>
@@ -73,7 +74,14 @@ int gettm(int a)
 
 void sleep_msec(unsigned ms)
 {
-#if UNIX
+#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 199309L
+	const struct timespec sleeptime = {
+		.tv_sec = ms / 1000,
+		.tv_nsec = (ms % 1000) * 1000000ul
+	};
+
+	nanosleep(&sleeptime, NULL);
+#elif UNIX
 	usleep(1000*ms);
 #elif WIN32
 	Sleep(ms);
